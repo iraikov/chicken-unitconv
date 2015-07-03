@@ -87,14 +87,14 @@ Returns true if the two units have the same dimension and factor, false otherwis
 Defines a derivative quantity `NAME`. 
 
 `EXPR` is an S-expression with the following syntax: 
-
- quantity-expr ::=  base-quantity
-                  | derived-quantity
-                  | (* quantity-expr quantity-expr)
-                  | (* quantity-expr integer)
-                  | (/ quantity-expr quantity-expr)
-                  | (/ quantity-expr integer)
-                  | (** quantity-expr integer)
+ 
+  quantity-expr ::=  base-quantity
+                   | derived-quantity
+                   | (* quantity-expr quantity-expr)
+                   | (* quantity-expr integer)
+                   | (/ quantity-expr quantity-expr)
+                   | (/ quantity-expr integer)
+                   | (** quantity-expr integer) 
 
 where 
 
@@ -132,29 +132,29 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 
 ### Derived Quantities
 
-- '''Geometry'''
+#### Geometry
 - `Area` : `(** Length 2)`
 - `Volume` : `(** Length 3)`
-- '''Mechanics'''
+#### Mechanics
 - `Velocity` : `(/ Length Time)`
 - `Acceleration` : `(/ Length (** Time 2))`
 - `Force` : `(* Mass Acceleration)`
 - `Pressure` : `(/ Force Area)`
 - `Energy` : `(* Force Length)`
 - `Power` : `(/ Energy Time)`
-- '''Electricity'''
+#### Electricity
 - `Charge` : `(* Current Time)`
 - `Potential` : `(/ Energy Charge)`
 - `Capacitance` : `(/ Charge Potential)`
 - `Resistance` : `(/ Potential Current)`
 - `Conductance` : `(/ Current Potential)`
 - `Inductance` : `(/ (* Potential Time) Current)`
-- '''Chemistry'''
+#### Chemistry
 - `Concentration` : `(/ Substance Volume)`
 - `Density` : `(/ Mass Volume)`
-- '''Optics'''
+#### Optics
 - `Luminance` : `(/ Luminosity Area)`
-- '''Other'''
+#### Other
 - `Frequency` : `(/ Unity Time)`
 - `Rate` : `(/ Information Time)`
 
