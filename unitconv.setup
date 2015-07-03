@@ -1,0 +1,22 @@
+;; -*- Hen -*-
+
+(define (dynld-name fn)		
+  (make-pathname #f fn ##sys#load-dynamic-extension))	
+
+(compile -O -d0 -s unitconv -j unitconv)
+(compile -O -d0 -s unitconv.import)
+
+(compile -O -d0 -s with-units -j with-units)
+(compile -O -d0 -s with-units.import)
+
+(install-extension 
+ 'unitconv
+ `( ,(dynld-name "unitconv") ,(dynld-name "unitconv.import")  )    
+ `((version 2.7)
+   ))
+
+(install-extension 
+ 'with-units
+ `( ,(dynld-name "with-units") ,(dynld-name "with-units.import")  )    
+ `((version 2.7)
+   ))

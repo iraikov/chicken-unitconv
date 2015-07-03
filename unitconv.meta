@@ -1,0 +1,24 @@
+;; -*- Hen -*-
+
+((egg "unitconv.egg") ; This should never change
+
+ ; List here all the files that should be bundled as part of your egg.  
+
+ (files "unitconv.meta" "with-units.scm" "unitconv.setup" "unitconv.scm")
+
+ ; Your egg's license:
+
+ (license "GPL-3")
+
+ ; Pick one from the list of categories (see below) for your egg and
+ ; enter it here.
+
+ (category math)
+
+ ; A list of eggs unitconv depends on.
+
+ (needs datatype matchable numbers)
+
+ (author "Ivan Raikov")
+
+ (synopsis "Conversion of units of measurement"))
