@@ -135,6 +135,7 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 #### Geometry
 - `Area` : `(** Length 2)`
 - `Volume` : `(** Length 3)`
+
 #### Mechanics
 - `Velocity` : `(/ Length Time)`
 - `Acceleration` : `(/ Length (** Time 2))`
@@ -142,6 +143,7 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 - `Pressure` : `(/ Force Area)`
 - `Energy` : `(* Force Length)`
 - `Power` : `(/ Energy Time)`
+
 #### Electricity
 - `Charge` : `(* Current Time)`
 - `Potential` : `(/ Energy Charge)`
@@ -149,11 +151,14 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 - `Resistance` : `(/ Potential Current)`
 - `Conductance` : `(/ Current Potential)`
 - `Inductance` : `(/ (* Potential Time) Current)`
+
 #### Chemistry
 - `Concentration` : `(/ Substance Volume)`
 - `Density` : `(/ Mass Volume)`
+
 #### Optics
 - `Luminance` : `(/ Luminosity Area)`
+
 #### Other
 - `Frequency` : `(/ Unity Time)`
 - `Rate` : `(/ Information Time)`
