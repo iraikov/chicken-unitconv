@@ -447,7 +447,7 @@
 (define (unit-equal? x y)
   (and (= (quantity-int (unit-dims x)) 
 	  (quantity-int (unit-dims y)))
-       (< (- (unit-factor x) (unit-factor y)) 1e-16)))
+       (< (abs (- (unit-factor x) (unit-factor y))) 1e-16)))
 
 
 (define (unitless? u)
