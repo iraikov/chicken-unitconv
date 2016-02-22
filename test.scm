@@ -26,3 +26,7 @@
 (print amp-per-square-meter)
 
 (print (unit-convert amp-per-square-meter milliamp-per-square-centimeter))
+
+(print Frequency)
+(print (unit* millisecond hertz))
+(print (quantity-int (unit-dims (unit* millisecond hertz))))

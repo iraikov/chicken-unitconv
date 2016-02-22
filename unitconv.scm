@@ -3,7 +3,7 @@
 ;;
 ;; TODO: implement non-strict conversion (e.g. mass <-> energy, mass <-> weight)
 ;;
-;; Copyright 2007-2015 Ivan Raikov and the University of California, Irvine.
+;; Copyright 2007-2016 Ivan Raikov.
 ;;
 ;; This program is free software: you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -447,7 +447,7 @@
 (define (unit-equal? x y)
   (and (= (quantity-int (unit-dims x)) 
 	  (quantity-int (unit-dims y)))
-       (= (unit-factor x) (unit-factor y))))
+       (< (- (unit-factor x) (unit-factor y)) 1e-16)))
 
 
 (define (unitless? u)
@@ -470,7 +470,7 @@
 (define (unit-invert u)
   (assert (unit? u))
     (make-unit (gensym "u")  
-	       (make-quantity (gensym "q") (- 1 (quantity-int (unit-dims u)) ))
+	       (make-quantity (gensym "q") (- (quantity-int (unit-dims u)) ))
 	       (/ 1 (unit-factor u)) 
 	       '()))
 
@@ -484,13 +484,9 @@
 	((unitless? u2) u1)
 
 	(else  (assert (and (unit? u1) (unit? u2)))
-	       (make-unit (gensym "u")  
-			  (make-quantity (gensym "q")
-					 (- (quantity-int (unit-dims u1)) 
-					    (quantity-int (unit-dims u2))))
-			  (/ (unit-factor u1) (unit-factor u2))
-			  '()))))
+	       (unit* u1 (unit-invert u2)))
 
+        ))
 
 (define (unit-expt u p)
   (cond ((unitless? u) u)

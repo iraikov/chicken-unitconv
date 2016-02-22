@@ -12,11 +12,11 @@
 (install-extension 
  'unitconv
  `( ,(dynld-name "unitconv") ,(dynld-name "unitconv.import")  )    
- `((version 2.7)
+ `((version 2.8)
    ))
 
 (install-extension 
  'with-units
  `( ,(dynld-name "with-units") ,(dynld-name "with-units.import")  )    
- `((version 2.7)
+ `((version 2.8)
    ))
