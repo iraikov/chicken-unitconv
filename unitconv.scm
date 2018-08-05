@@ -3,7 +3,7 @@
 ;;
 ;; TODO: implement non-strict conversion (e.g. mass <-> energy, mass <-> weight)
 ;;
-;; Copyright 2007-2016 Ivan Raikov.
+;; Copyright 2007-2018 Ivan Raikov.
 ;;
 ;; This program is free software: you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -325,11 +325,10 @@
 	 )
 	
 
-   (import scheme chicken data-structures extras srfi-4)
-
-   (require-extension datatype matchable srfi-4)	
-   (import-for-syntax matchable chicken)	
-
+   (import scheme (chicken base) (chicken syntax) (only (chicken format) fprintf) srfi-4)
+   (import datatype matchable)
+   (import-for-syntax (chicken string) matchable)
+   
 (define pi 3.14159265358979)
 
 
@@ -410,18 +409,19 @@
 ;;
 (define (dimint v)
   (let loop ((i (- Q 1)) (sum 0))
-    (if (fx<= 0 i)
-	(loop (fx- i 1)  (+ sum (* (dref dimvals i) (dref v i))))
+    (if (<= 0 i)
+	(loop (- i 1)  (+ sum (* (dref dimvals i) (dref v i))))
 	sum)))
 
 
 (define-syntax define-base-quantity
+  (er-macro-transformer
   (lambda (x r c)
     (let ((name   (cadr x))
 	  (value  (caddr x))
 	  (%define (r 'define)))
       `(,%define ,name (make-quantity ',name ,value)))))
-
+  )
 
 (define-base-quantity  Unity          0)
 (define-base-quantity  Length         (dref dimvals 0))
@@ -542,6 +542,7 @@
 
 
 (define-syntax quantity-expr-eval
+  (er-macro-transformer
   (lambda (x r c)
     (let ((expr       (cadr x))
 	  (left?      (caddr x))
@@ -574,10 +575,11 @@
 			(unitconv:error 'quantity-expr-eval 
 					"integers are not allowed as the left operand of quantity expression" (quote ,x)))
 		       (,%else  (unitconv:error 'quantity-expr-eval ": unknown quantity " ,x))))))))
-	 
+  )
   
 
 (define-syntax define-quantity
+  (er-macro-transformer
   (lambda (x r c)
     (let ((name (cadr x))
 	  (expr (caddr x))
@@ -585,6 +587,7 @@
 	  (make-quantity (r 'make-quantity))
 	  (quantity-expr-eval (r 'quantity-expr-eval)))
       `(,%define ,name (,make-quantity ',name (,quantity-expr-eval ,expr #f))))))
+  )
 
 
 (define-for-syntax (binop-fold op lst)
@@ -597,6 +600,7 @@
 
 
 (define-syntax unit-factor-eval
+  (er-macro-transformer
   (lambda (x r c)
     (let ((expr (cadr x))
 	  (%let       (r 'let))
@@ -626,10 +630,11 @@
 
              (else (error 'unit-factor-eval "invalid unit factor expression" expr)))
       )))
-	 
+  )
   
 
 (define-syntax unit-factor-dim
+  (er-macro-transformer
   (lambda (x r c)
     (let ((expr (cadr x))
 	  (%let       (r 'let))
@@ -661,17 +666,19 @@
 			       (else  (unitconv:error 'unit-factor-dim ": unknown unit " ,x))))
              (else (error 'unit-factor-dim "invalid unit factor expression" expr)))
       )))
-	 
+  )
 
 (define-syntax make-unit-prefix
+  (er-macro-transformer
   (lambda (x r c)
     (let ((prefix (cadr x))
 	  (unit (caddr x))
 	  (abbrevs (cdddr x)))
       `(unit-prefix ,prefix ,unit ',abbrevs))))
-
+  )
 
 (define-syntax define-unit
+  (er-macro-transformer
   (lambda (x r c)
     (let ((name    (cadr x))
 	  (dims    (caddr x))
@@ -691,9 +698,11 @@
                                (make-unit ',name ,dims (unit-factor-eval ,factor) ',abbrevs) 
                                (unitconv:error 'define-unit "unit dimension mismatch" ,dims ,%factordim))))
 	,@(map (lambda (abbrev) `(,%define ,abbrev ,name)) abbrevs)))))
+  )
 
 
 (define-syntax define-unit-prefix
+  (er-macro-transformer
   (lambda (x r c)
     (let ((prefix  (cadr x))
 	  (unit    (caddr x))
@@ -704,6 +713,7 @@
 	`(,%begin
 	  (,%define ,name (unit-prefix ,prefix ,unit ',abbrevs))
 	  ,@(map (lambda (abbrev) `(,%define ,abbrev ,name)) abbrevs))))))
+  )
 
 ;;
 ;; Geometry

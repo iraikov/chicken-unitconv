@@ -49,9 +49,7 @@
 	 )
 
 	
-	(import scheme chicken data-structures )
-	(require-extension unitconv numbers)
-	(import (only extras fprintf))
+	(import scheme (chicken base) (only (chicken format) fprintf) unitconv)
 
 ;;; If set to #t allows contageous no-unit combinations.
 (define *permissive-units* (make-parameter #f))

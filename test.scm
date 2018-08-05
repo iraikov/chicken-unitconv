@@ -1,4 +1,4 @@
-(use unitconv)
+(import unitconv)
 
 
 (define-unit-prefix    milli second  ms)
