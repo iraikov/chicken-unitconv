@@ -47,7 +47,8 @@
 	 unit-factor
 	 unit-dims
 	 unit-prefix
-
+         unit
+         
 	 unit-convert
 	 unit/
 	 unit*
@@ -505,7 +506,7 @@
 	(fprintf out "#(unit ~S " (unit-name x))
 	(fprintf out "#(unit ~S ~S " (unit-name x) (unit-abbrevs x)))
     (fprintf out "[~S] ~S)"
-	   (quantity-name (unit-dims x))
+	   (quantity-name dims)
 	   (unit-factor x))))
 
 
@@ -513,6 +514,8 @@
 (define (unit-prefix prefix u abbrevs)
   (or (and (unit? prefix) (unit? u)) 
       (unitconv:error 'unit-prefix ": invalid unit: " u))
+  (if (not (quantity? (unit-dims u)))
+      (unitconv:error 'unit-prefix ": invalid quantity in unit: " u (unit-dims )))
   (if (not (= 0 (quantity-int (unit-dims prefix))))
       (unitconv:error 'unit-prefix ": prefix must be dimensionless: " prefix))
   (if (zero? (quantity-int (unit-dims u)))
