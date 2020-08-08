@@ -93,7 +93,14 @@
 	 Resistance
 	 Conductance
 	 Inductance
-
+         
+	 ;;
+	 ;; Electromagnetism
+	 ;;
+         Magnetic-Flux
+         Magnetic-Flux-Density
+         Magnetic-Field-Strength
+         
 	 ;;
 	 ;; Chemistry
 	 ;;
@@ -748,6 +755,14 @@
 (define-quantity   Inductance     (/ (* Potential Time) Current))
 
 ;;
+;; Electromagnetism
+;;
+(define-quantity Magnetic-Flux  (/ (* Mass Area) (* (** Time 2) Current)))
+(define-quantity Magnetic-Flux-Density  (/ Mass (* (** Time 2) Current)))
+(define-quantity Magnetic-Field-Strength  (/ Current Length)) 
+
+
+;;
 ;; Chemistry
 ;;
 (define-quantity   Concentration  (/ Substance Volume))
@@ -903,6 +918,13 @@
 				  (* ampere ampere second second)) H)
 (define-unit-prefix milli henry mH)
 (define-unit-prefix micro henry uH)
+
+;; Units of magnetic flux 
+(define-unit tesla Magnetic-Flux-Density (/ kilogram (* ampere second second)) T teslas)
+(define-unit weber Magnetic-Flux (/ (* kilogram meter meter) (* ampere second second)) wb webers)
+
+;; Units of magnetic field strength 
+(define-unit ampere-per-meter Magnetic-Field-Strength (/ ampere meter) amperes-per-meter)
 
 ;; Units of substance
 (define-unit mole Substance 1.0 mol moles)
