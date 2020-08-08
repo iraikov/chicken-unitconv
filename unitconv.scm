@@ -234,6 +234,10 @@
 	 millihenry mH
 	 microhenry uH
 
+         ;; Units of magnetic flux
+         tesla T teslas
+         weber wb webers
+         
 	 ;; Units of substance
 	 mole mol moles
 

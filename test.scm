@@ -32,4 +32,6 @@
 (print (quantity-int (unit-dims (unit* millisecond hertz))))
 
 (print (unit-convert week second))
+(print tesla)
+
 
