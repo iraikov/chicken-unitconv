@@ -3,7 +3,7 @@
 ;;
 ;; TODO: implement non-strict conversion (e.g. mass <-> energy, mass <-> weight)
 ;;
-;; Copyright 2007-2018 Ivan Raikov.
+;; Copyright 2007-2020 Ivan Raikov.
 ;;
 ;; This program is free software: you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -176,6 +176,9 @@
 	 ;; Units of time
 	 second s seconds
 	 hour h hrs hours
+         minute minutes
+         day days
+         week weeks
 
 	 ;; Units of acceleration
 	 meters-per-second-squared m/s2 m/s^2 m/sec2 m/sec^2
@@ -843,8 +846,12 @@
 (define-unit atomic-mass-unit Mass 1.6605402e-27 amu atomic-mass-units)
 
 ;; Units of time
-(define-unit second       Time  1.0       s seconds)
+(define-unit second       Time  1.0 s seconds)
 (define-unit hour         Time  (* sixty (* sixty second)) h hrs hours)
+(define-unit minute       Time  (* sixty second) minutes)
+(define-unit hour         Time  (* sixty minute) h hrs hours)
+(define-unit day          Time  (* 24 hour) days)
+(define-unit week         Time  (* 7 day) weeks)
 
 ;; Units of acceleration
 (define-unit meters-per-second-squared Acceleration (/ meter (* second second)) m/s2 m/s^2 m/sec2 m/sec^2)

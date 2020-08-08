@@ -30,3 +30,6 @@
 (print Frequency)
 (print (unit* millisecond hertz))
 (print (quantity-int (unit-dims (unit* millisecond hertz))))
+
+(print (unit-convert week second))
+

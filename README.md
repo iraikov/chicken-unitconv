@@ -271,6 +271,9 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 <tr><th>Name</th><th>Quantity</th><th>Factor</th><th>Abbreviation(s)</th></tr>
 <tr><td>second</td><td>Time</td><td>1.0</td><td>(s seconds)</td></tr>
 <tr><td>hour</td><td>Time</td><td>(* sixty (* sixty second))</td><td>(h hrs hours)</td></tr>
+<tr><td>minute</td><td>Time</td><td>(* sixty second)</td><td>(minutes)</td></tr>
+<tr><td>day</td><td>Time</td><td>(* 24 hour)</td><td>(days)</td></tr>
+<tr><td>week</td><td>Time</td><td>(* 7 day)</td><td>(weeks)</td></tr>
 </table>
 
 ### Units of Acceleration
@@ -457,7 +460,7 @@ The following operations are available for operations on quantities with units:
 
 ## Version history
 
-
+- 3.3 : Additional units of time [Andre Sa]
 - 3.0 : Compatibility with CHICKEN 5
 - 2.6 : Bugfixes in unit* and unit/
 - 2.3 : Added definitions for centimeter and centimeter-squared
@@ -478,7 +481,7 @@ The following operations are available for operations on quantities with units:
 ## License
 
 >
-> Copyright 2007-2018 Ivan Raikov.
+> Copyright 2007-2020 Ivan Raikov.
 > 
 > This program is free software: you can redistribute it and/or modify
 > it under the terms of the GNU General Public License as published by
