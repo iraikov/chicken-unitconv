@@ -341,7 +341,7 @@
 	
 
    (import scheme (chicken base) (chicken syntax) (only (chicken format) fprintf) srfi-4)
-   (import datatype matchable)
+   (import matchable)
    (import-for-syntax (chicken string) matchable)
    
 (define pi 3.14159265358979)
