@@ -366,12 +366,13 @@
   (name quantity-name)
   (int quantity-int))
 
-(define-record-printer (quantity x out)
-  (if (zero? (quantity-int x))
-      (fprintf out "#(quantity Unity)")
-      (fprintf out "#(quantity ~S ~S)"
-	       (quantity-name x)
-	       (quantity-int x))))
+(set-record-printer! quantity
+  (lambda (x out)
+    (if (zero? (quantity-int x))
+        (fprintf out "#(quantity Unity)")
+        (fprintf out "#(quantity ~S ~S)"
+                 (quantity-name x)
+                 (quantity-int x)))))
 
 
 ;; The number of base quantities defined
@@ -513,15 +514,16 @@
 			 '()))))
 
   
-(define-record-printer (unit x out)
-  (let ((dims     (unit-dims x))
-	(abbrevs  (unit-abbrevs x)))
-    (if (null? abbrevs)
-	(fprintf out "#(unit ~S " (unit-name x))
-	(fprintf out "#(unit ~S ~S " (unit-name x) (unit-abbrevs x)))
-    (fprintf out "[~S] ~S)"
-	   (quantity-name dims)
-	   (unit-factor x))))
+(set-record-printer! unit
+  (lambda (x out)
+    (let ((dims     (unit-dims x))
+          (abbrevs  (unit-abbrevs x)))
+      (if (null? abbrevs)
+          (fprintf out "#(unit ~S " (unit-name x))
+          (fprintf out "#(unit ~S ~S " (unit-name x) (unit-abbrevs x)))
+      (fprintf out "[~S] ~S)"
+               (quantity-name dims)
+               (unit-factor x)))))
 
 
 
