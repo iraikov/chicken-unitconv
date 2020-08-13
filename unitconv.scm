@@ -158,6 +158,7 @@
 	 inch in inches
 	 foot ft feet
 	 angstrom ang angstroms
+	 astronomical-unit au
 	 parsec parsecs
 	 centimeter cm centimeters
 	 millimeter mm millimeters
@@ -834,14 +835,15 @@
 (define-unit grad       Unity  (/ pi 200)  gon grd)
 
 ;; Units of length
-(define-unit meter     Length 1                 m meters)
-(define-unit inch      Length 254/10000         in inches)
-(define-unit foot      Length 3048/10000        ft feet)
-(define-unit angstrom  Length 1/10000000000     ang angstroms)
-(define-unit parsec    Length 30856775810000000 parsecs)
-(define-unit-prefix    centi meter cm centimeters)
-(define-unit-prefix    milli meter mm millimeters)
-(define-unit-prefix    micro meter um micron microns micrometers)
+(define-unit meter             Length 1                 m meters)
+(define-unit inch              Length 254/10000         in inches)
+(define-unit foot              Length 3048/10000        ft feet)
+(define-unit angstrom          Length 1/10000000000     ang angstroms)
+(define-unit astronomical-unit Length 149597870700 au)
+(define-unit parsec            Length (* (/ 648000 pi) au) parsecs)
+(define-unit-prefix            centi meter cm centimeters)
+(define-unit-prefix            milli meter mm millimeters)
+(define-unit-prefix            micro meter um micron microns micrometers)
 
 ;; Units of area and volume
 (define-unit square-meter  Area (* meter meter) m^2 m2 meter-squared meters-squared square-meters)
