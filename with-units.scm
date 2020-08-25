@@ -64,10 +64,11 @@
   )
 
 
-(define-record-printer (with-units x out)
-      (fprintf out "#(~S ~S)"
-	       (with-units-value x)
-	       (with-units-unit x)))
+(set-record-printer! with-units
+  (lambda (x out)
+    (fprintf out "#(~S ~S)"
+             (with-units-value x)
+             (with-units-unit x))))
 
 (define (u:units x)
   (cond ((with-units? x) (with-units-unit x))
