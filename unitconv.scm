@@ -158,6 +158,7 @@
 	 inch in inches
 	 foot ft feet
 	 angstrom ang angstroms
+	 astronomical-unit au
 	 parsec parsecs
 	 centimeter cm centimeters
 	 millimeter mm millimeters
@@ -344,7 +345,7 @@
    (import matchable)
    (import-for-syntax (chicken string) matchable)
    
-(define pi 3.14159265358979)
+(define pi 314159265358979/100000000000000)
 
 
 (define (unitconv:error x . rest)
@@ -463,7 +464,7 @@
 (define (unit-equal? x y)
   (and (= (quantity-int (unit-dims x)) 
 	  (quantity-int (unit-dims y)))
-       (< (abs (- (unit-factor x) (unit-factor y))) 1e-16)))
+       (< (abs (- (unit-factor x) (unit-factor y))) 1/10000000000000000)))
 
 
 (define (unitless? u)
@@ -790,29 +791,29 @@
 (define-quantity    Rate          (/ Information Time))
 
 
-(define-unit unitless Unity 1.0)
+(define-unit unitless Unity 1)
 	
 ;; SI unit prefixes 
-(define-unit yocto  Unity 1.0e-24)
-(define-unit zepto  Unity 1.0e-21)
-(define-unit atto   Unity 1.0e-18)
-(define-unit femto  Unity 1.0e-15)
-(define-unit pico   Unity 1.0e-12)
-(define-unit nano   Unity 1.0e-9)
-(define-unit micro  Unity 1.0e-6)
-(define-unit milli  Unity 1.0e-3)
-(define-unit centi  Unity 1.0e-2)
-(define-unit deci   Unity 1.0e-1)
-(define-unit deca   Unity  1.0e1)
-(define-unit hecto  Unity  1.0e2)
-(define-unit kilo   Unity  1.0e3)
-(define-unit mega   Unity  1.0e6)
-(define-unit giga   Unity  1.0e9)
-(define-unit tera   Unity  1.0e12)
-(define-unit peta   Unity  1.0e15)
-(define-unit exa    Unity  1.0e18)
-(define-unit zetta  Unity  1.0e21)
-(define-unit yotta  Unity  1.0e24)
+(define-unit yocto  Unity 1/1000000000000000000000000) ; 1.0e-24
+(define-unit zepto  Unity 1/1000000000000000000000)    ; 1.0e-21
+(define-unit atto   Unity 1/1000000000000000000)       ; 1.0e-18
+(define-unit femto  Unity 1/1000000000000000)          ; 1.0e-15
+(define-unit pico   Unity 1/1000000000000)             ; 1.0e-12
+(define-unit nano   Unity 1/1000000000)                ; 1.0e-9
+(define-unit micro  Unity 1/1000000)                   ; 1.0e-6
+(define-unit milli  Unity 1/1000)                      ; 1.0e-3
+(define-unit centi  Unity 1/100)                       ; 1.0e-2
+(define-unit deci   Unity 1/10)                        ; 1.0e-1
+(define-unit deca   Unity   10)                        ; 1.0e1
+(define-unit hecto  Unity   100)                       ; 1.0e2
+(define-unit kilo   Unity   1000)                      ; 1.0e3
+(define-unit mega   Unity   1000000)                   ; 1.0e6
+(define-unit giga   Unity   1000000000)                ; 1.0e9
+(define-unit tera   Unity   1000000000000)             ; 1.0e12
+(define-unit peta   Unity   1000000000000000)          ; 1.0e15
+(define-unit exa    Unity   1000000000000000000)       ; 1.0e18
+(define-unit zetta  Unity   1000000000000000000000)    ; 1.0e21
+(define-unit yotta  Unity   1000000000000000000000000) ; 1.0e24
 
 ;; IEC standard prefixes
 (define-unit kibi   Unity  1024)
@@ -829,21 +830,22 @@
 (define-unit sixty  Unity 60)
 
 ;; Angles (dimensionless ratio)
-(define-unit radian     Unity  1.0  rad radians)
+(define-unit radian     Unity  1  rad radians)
 (define-unit degree     Unity  (/ pi 180)  deg degrees)
 (define-unit arcminute  Unity  (/ degree 60)  arcmin amin MOA)
 (define-unit arcsecond  Unity  (/ arcminute 60)  arcsec)
 (define-unit grad       Unity  (/ pi 200)  gon grd)
 
 ;; Units of length
-(define-unit meter     Length 1.0       m meters)
-(define-unit inch      Length 0.0254    in inches)
-(define-unit foot      Length 0.3048    ft feet)
-(define-unit angstrom  Length 1.0e-10   ang angstroms)
-(define-unit parsec    Length 3.083e16  parsecs)
-(define-unit-prefix    centi meter cm centimeters)
-(define-unit-prefix    milli meter mm millimeters)
-(define-unit-prefix    micro meter um micron microns micrometers)
+(define-unit meter             Length 1                 m meters)
+(define-unit inch              Length 254/10000         in inches)
+(define-unit foot              Length 3048/10000        ft feet)
+(define-unit angstrom          Length 1/10000000000     ang angstroms)
+(define-unit astronomical-unit Length 149597870700 au)
+(define-unit parsec            Length (* (/ 648000 pi) au) parsecs)
+(define-unit-prefix            centi meter cm centimeters)
+(define-unit-prefix            milli meter mm millimeters)
+(define-unit-prefix            micro meter um micron microns micrometers)
 
 ;; Units of area and volume
 (define-unit square-meter  Area (* meter meter) m^2 m2 meter-squared meters-squared square-meters)
@@ -856,18 +858,18 @@
                                                               square-centimeters)
 
 (define-unit cubic-meter   Volume  (* meter (* meter meter)) m^3 meter-cubed meters-cubed cubic-meters )
-(define-unit liter         Volume  (* 0.001 cubic-meter) L litre liters)
+(define-unit liter         Volume  (/ cubic-meter 1000) L litre liters)
 
 ;; Units of mass
-(define-unit kilogram     Mass  1.0       kg kilograms)
-(define-unit gram         Mass  1e-3      g grams)
+(define-unit kilogram     Mass  1         kg kilograms)
+(define-unit gram         Mass  1/1000    g grams)
 (define-unit-prefix       milli gram mg milligrams)
-(define-unit pound        Mass  (* gram 453.59237) lb pounds)
-(define-unit slug         Mass  (* pound 32.17405) slugs)
-(define-unit atomic-mass-unit Mass 1.6605402e-27 amu atomic-mass-units)
+(define-unit pound        Mass  (* gram 45359237/100000) lb pounds)
+(define-unit slug         Mass  (* pound 3217405/100000) slugs)
+(define-unit atomic-mass-unit Mass 16605402/10000000000000000000000000000000000 amu atomic-mass-units)
 
 ;; Units of time
-(define-unit second       Time  1.0 s seconds)
+(define-unit second       Time  1   s seconds)
 (define-unit hour         Time  (* sixty (* sixty second)) h hrs hours)
 (define-unit minute       Time  (* sixty second) minutes)
 (define-unit hour         Time  (* sixty minute) h hrs hours)
@@ -878,7 +880,7 @@
 (define-unit meters-per-second-squared Acceleration (/ meter (* second second)) m/s2 m/s^2 m/sec2 m/sec^2)
 
 ;; Units of frequency
-(define-unit hertz Frequency 1.0 hz)
+(define-unit hertz Frequency 1 hz)
 
 ;; Units of force
 (define-unit newton       Force (/ (* kilogram meter) (* second second)) nt newtons)
@@ -892,14 +894,14 @@
 
 ;; Units of energy
 (define-unit joule Energy  (* newton meter) J joules)
-(define-unit electron-volt Energy  (* 1.60217733e-19 joule) ev electron-volts)
+(define-unit electron-volt Energy  (* 160217733/1000000000000000000000000000 joule) ev electron-volts)
 (define-unit kilowatt-hour Energy  (* kilo (* watt hour)) kwh kilowatt-hours)
-(define-unit calorie       Energy  (* 4.184 joule) cal calories)
-(define-unit erg           Energy  (* 1.0e-7 joule) ergs)
-(define-unit british-thermal-unit Energy (* 1055.056 joule) btu btus)
+(define-unit calorie       Energy  (* 4184/1000 joule) cal calories)
+(define-unit erg           Energy  (* 1/10000000 joule) ergs)
+(define-unit british-thermal-unit Energy (* 1055056/1000 joule) btu btus)
 
 ;; Units of current
-(define-unit ampere  Current 1.0 A amp amps amperes)
+(define-unit ampere  Current 1 A amp amps amperes)
 
 ;; Units of electric charge
 (define-unit coulomb Charge  (* ampere second) C coulombs)
@@ -933,7 +935,7 @@
 (define-unit ampere-per-meter Magnetic-Field-Strength (/ ampere meter) amperes-per-meter)
 
 ;; Units of substance
-(define-unit mole Substance 1.0 mol moles)
+(define-unit mole Substance 1 mol moles)
 
 ;; Units of density
 (define-unit rho Density (/ kilogram cubic-meter))
@@ -943,7 +945,7 @@
 (define-unit parts-per-million Concentration (/ milligram kilogram) ppm)
 
 ;; Units of temperature
-(define-unit degK       Temperature  1.0       K)
+(define-unit degK       Temperature  1       K)
 
 ;; Units of information quantity, evidence, and information entropy
 
@@ -955,12 +957,12 @@
 (define-unit byte     Information  8                 B bytes)
 
 ;; nat = log_e(p)     (Boulton and Wallace)
-(define-unit nat      Information  1.44269504088896  nats
+(define-unit nat      Information  144269504088896/100000000000000 nats
   nit nits
   nepit nepits)
 
 ;; ban = log_10(p)    (Hartley, Turing, and Good)
-(define-unit ban      Information  3.32192809488736  bans
+(define-unit ban      Information  332192809488736/100000000000000 bans
   hartley hartleys
   Hart Harts
   dit dits)

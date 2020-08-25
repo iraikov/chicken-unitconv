@@ -110,7 +110,7 @@
   (val-with-units (invert (u:value x)) (unit-invert (u:units x))))
 
 (define (u:sqrt x)
-  (val-with-units (sqrt (u:value x)) (unit-expt (u:units x) 0.5)))
+  (val-with-units (sqrt (u:value x)) (unit-expt (u:units x) 1/2)))
 
 (define (u:sin x)
   (val-with-units (sin (u:value x)) unitless))
