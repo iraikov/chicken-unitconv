@@ -2,7 +2,7 @@
 ((synopsis "Conversion of units of measurement")
  (license "LGPL-3")
  (category math)
- (dependencies datatype matchable)
+ (dependencies matchable)
  (test-dependencies test)
  (author "Ivan Raikov")
  (components
