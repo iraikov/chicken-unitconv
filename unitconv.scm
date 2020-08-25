@@ -3,7 +3,7 @@
 ;;
 ;; TODO: implement non-strict conversion (e.g. mass <-> energy, mass <-> weight)
 ;;
-;; Copyright 2007-2020 Ivan Raikov.
+;; Copyright 2007-2020 Ivan Raikov, André Sá.
 ;;
 ;; This program is free software: you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
