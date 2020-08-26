@@ -40,7 +40,7 @@ each unit must be specified when the unit is declared.
  
  ;; define units of length
  (define-unit meter     Length 1.0       m meters)
- (define-unit inch      Length 0.0254    in inches)
+ (define-unit inch      Length 254/10000 in inches)
  
  ;; define units of mass and time
  (define-unit kilogram  Mass   1.0       kg kilograms)
@@ -57,8 +57,8 @@ each unit must be specified when the unit is declared.
 Now only conversion between units of the same dimensionality is permitted: 
 
 ```scheme
- (unit-convert meter inch 1) ->  39.3700787401575
- (unit-convert meter inch 2 3 4) ->  (78.740157480315 118.110236220472 157.48031496063)
+ (unit-convert meter inch 1) ->  5000/127
+ (unit-convert meter inch 2 3 4) ->  (10000/127 15000/127 20000/127)
  
  (unit-convert meter kilogram 1)
  Error: (unitconv) unit-convert : given units are of different dimensions: 
@@ -152,6 +152,11 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 - `Conductance` : `(/ Current Potential)`
 - `Inductance` : `(/ (* Potential Time) Current)`
 
+#### Electromagnetism
+- `Magnetic-Flux` :  `(/ (* Mass Area) (* (** Time 2) Current))`
+- `Magnetic-Flux-Density` :  `(/ Mass (* (** Time 2) Current))`
+- `Magnetic-Field-Strength` :  `(/ Current Length)`
+
 #### Chemistry
 - `Concentration` : `(/ Substance Volume)`
 - `Density` : `(/ Mass Volume)`
@@ -182,11 +187,11 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 <tr><td>centi</td><td>Unity</td><td>0.01</td><td></td></tr>
 <tr><td>deci</td><td>Unity</td><td>0.1</td><td></td></tr>
 <tr><td>deca</td><td>Unity</td><td>10.0</td><td></td></tr>
-<tr><td>hecto</td><td>Unity</td><td>100.0</td><td></td></tr>
-<tr><td>kilo</td><td>Unity</td><td>1000.0</td><td></td></tr>
-<tr><td>mega</td><td>Unity</td><td>1000000.0</td><td></td></tr>
-<tr><td>giga</td><td>Unity</td><td>1000000000.0</td><td></td></tr>
-<tr><td>tera</td><td>Unity</td><td>1000000000000.0</td><td></td></tr>
+<tr><td>hecto</td><td>Unity</td><td>100</td><td></td></tr>
+<tr><td>kilo</td><td>Unity</td><td>1000</td><td></td></tr>
+<tr><td>mega</td><td>Unity</td><td>1000000</td><td></td></tr>
+<tr><td>giga</td><td>Unity</td><td>1000000000</td><td></td></tr>
+<tr><td>tera</td><td>Unity</td><td>1000000000000</td><td></td></tr>
 <tr><td>peta</td><td>Unity</td><td>1e+15</td><td></td></tr>
 <tr><td>exa</td><td>Unity</td><td>1e+18</td><td></td></tr>
 <tr><td>zetta</td><td>Unity</td><td>1e+21</td><td></td></tr>
@@ -200,12 +205,12 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 <tr><th>Name</th><th>Quantity</th><th>Factor</th><th>Abbreviation(s)</th></tr>
 <tr><td>kibi</td><td>Unity</td><td>1024</td><td></td></tr>
 <tr><td>mebi</td><td>Unity</td><td>1048576</td><td></td></tr>
-<tr><td>gibi</td><td>Unity</td><td>1073741824.0</td><td></td></tr>
-<tr><td>tebi</td><td>Unity</td><td>1099511627776.0</td><td></td></tr>
-<tr><td>pebi</td><td>Unity</td><td>1.12589990684262e+15</td><td></td></tr>
-<tr><td>exbi</td><td>Unity</td><td>1.15292150460685e+18</td><td></td></tr>
-<tr><td>zebi</td><td>Unity</td><td>1.18059162071741e+21</td><td></td></tr>
-<tr><td>yobi</td><td>Unity</td><td>1.20892581961463e+24</td><td></td></tr>
+<tr><td>gibi</td><td>Unity</td><td>1073741824</td><td></td></tr>
+<tr><td>tebi</td><td>Unity</td><td>1099511627776</td><td></td></tr>
+<tr><td>pebi</td><td>Unity</td><td>1125899906842624</td><td></td></tr>
+<tr><td>exbi</td><td>Unity</td><td>1152921504606846976</td><td></td></tr>
+<tr><td>zebi</td><td>Unity</td><td>1180591620717411303424</td><td></td></tr>
+<tr><td>yobi</td><td>Unity</td><td>1208925819614629174706176</td><td></td></tr>
 </table>
 
 ### Time Multiples
@@ -233,10 +238,12 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 <col width="25%" /><col width="25%" /><col width="25%" /><col width="25%" />
 <tr><th>Name</th><th>Quantity</th><th>Factor</th><th>Abbreviation(s)</th></tr>
 <tr><td>meter</td><td>Length</td><td>1.0</td><td>(m meters)</td></tr>
-<tr><td>inch</td><td>Length</td><td>0.0254</td><td>(in inches)</td></tr>
-<tr><td>foot</td><td>Length</td><td>0.3048</td><td>(ft feet)</td></tr>
+<tr><td>inch</td><td>Length</td><td>254/10000</td><td>(in inches)</td></tr>
+<tr><td>foot</td><td>Length</td><td>3048/10000</td><td>(ft feet)</td></tr>
+
 <tr><td>angstrom</td><td>Length</td><td>1e-10</td><td>(ang angstroms)</td></tr>
-<tr><td>parsec</td><td>Length</td><td>3.083e+16</td><td>(parsecs)</td></tr>
+<tr><td>astronomical-unit</td><td>Length</td><td>149597870700</td><td>(au)</td></tr>
+<tr><td>parsec</td><td>Length</td><td>(* (/ 648000 pi) au)</td><td>(parsecs)</td></tr>
 </table>
 
 ### Units of Area and Volume
@@ -258,9 +265,9 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 <col width="25%" /><col width="25%" /><col width="25%" /><col width="25%" />
 <tr><th>Name</th><th>Quantity</th><th>Factor</th><th>Abbreviation(s)</th></tr>
 <tr><td>kilogram</td><td>Mass</td><td>1.0</td><td>(kg kilograms)</td></tr>
-<tr><td>gram</td><td>Mass</td><td>0.001</td><td>(g grams)</td></tr>
-<tr><td>pound</td><td>Mass</td><td>(* gram 453.59237)</td><td>(lb pounds)</td></tr>
-<tr><td>slug</td><td>Mass</td><td>(* pound 32.17405)</td><td>(slugs)</td></tr>
+<tr><td>gram</td><td>Mass</td><td>1/1000</td><td>(g grams)</td></tr>
+<tr><td>pound</td><td>Mass</td><td>(* gram 45359237/100000)</td><td>(lb pounds)</td></tr>
+<tr><td>slug</td><td>Mass</td><td>(* pound 3217405/100000)</td><td>(slugs)</td></tr>
 <tr><td>atomic-mass-unit</td><td>Mass</td><td>1.6605402e-27</td><td>(amu atomic-mass-units)</td></tr>
 </table>
 
@@ -318,9 +325,9 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 <tr><td>joule</td><td>Energy</td><td>(* newton meter)</td><td>(J joules)</td></tr>
 <tr><td>electron-volt</td><td>Energy</td><td>(* 1.60217733e-19 joule)</td><td>(ev electron-volts)</td></tr>
 <tr><td>kilowatt-hour</td><td>Energy</td><td>(* kilo (* watt hour))</td><td>(kwh kilowatt-hours)</td></tr>
-<tr><td>calorie</td><td>Energy</td><td>(* 4.184 joule)</td><td>(cal calories)</td></tr>
+<tr><td>calorie</td><td>Energy</td><td>(* 4184/1000 joule)</td><td>(cal calories)</td></tr>
 <tr><td>erg</td><td>Energy</td><td>(* 1e-07 joule)</td><td>(ergs)</td></tr>
-<tr><td>british-thermal-unit</td><td>Energy</td><td>(* 1055.056 joule)</td><td>(btu btus)</td></tr>
+<tr><td>british-thermal-unit</td><td>Energy</td><td>(* 1055056/1000 joule)</td><td>(btu btus)</td></tr>
 </table>
 
 ### Units of Current
@@ -378,6 +385,23 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 <tr><td>henry</td><td>Inductance</td><td>(/ (* meter meter kilogram) (* ampere ampere second second))</td><td>(H)</td></tr>
 </table>
 
+### Units of Magnetic Flux
+
+<table style="table { table-layout: fixed; }">
+<col width="25%" /><col width="25%" /><col width="25%" /><col width="25%" />
+<tr><th>Name</th><th>Quantity</th><th>Factor</th><th>Abbreviation(s)</th></tr>
+<tr><td>tesla</td><td>Magnetic-Flux-Density</td><td>(/ kilogram (* ampere second second))</td><td>(T teslas)</td></tr>
+<tr><td>weber</td><td>Magnetic-Flux</td><td>(/ (* kilogram meter meter) (* ampere second second))</td><td>(wb webers)</td></tr>
+</table>
+
+### Units of Magnetic Field Strength
+
+<table style="table { table-layout: fixed; }">
+<col width="25%" /><col width="25%" /><col width="25%" /><col width="25%" />
+<tr><th>Name</th><th>Quantity</th><th>Factor</th><th>Abbreviation(s)</th></tr>
+<tr><td>ampere-per-meter</td><td>Magnetic-Field-Strength</td><td>(/ ampere meter)</td><td>(amperes-per-meter)</td></tr>
+</table>
+
 ### Units of Substance
 
 <table style="table { table-layout: fixed; }">
@@ -386,7 +410,7 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 <tr><td>mole</td><td>Substance</td><td>1.0</td><td>(mol moles)</td></tr>
 </table>
 
-### Units of density
+### Units of Density
 
 <table style="table { table-layout: fixed; }">
 <col width="25%" /><col width="25%" /><col width="25%" /><col width="25%" />
@@ -394,7 +418,7 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 <tr><td>rho</td><td>Density</td><td>(/ kilogram cubic-meter)</td><td></td></tr>
 </table>
 
-### Units of concentration
+### Units of Concentration
 
 <table style="table { table-layout: fixed; }">
 <col width="25%" /><col width="25%" /><col width="25%" /><col width="25%" />
@@ -403,7 +427,7 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 <tr><td>parts-per-million</td><td>Concentration</td><td>(/ milligram kilogram)</td><td>(ppm)</td></tr>
 </table>
 
-### Units of temperature
+### Units of Temperature
 
 <table style="table { table-layout: fixed; }">
 <col width="25%" /><col width="25%" /><col width="25%" /><col width="25%" />
@@ -411,7 +435,7 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 <tr><td>degK</td><td>Temperature</td><td>1.0</td><td>(K)</td></tr>
 </table>
 
-### Units of information
+### Units of Information
 
 <table style="table { table-layout: fixed; }">
 <col width="25%" /><col width="25%" /><col width="25%" /><col width="25%" />
@@ -422,7 +446,7 @@ Defines a variable whose name is the concatenated `PREFIX` and `UNIT` and that h
 <tr><td>ban</td><td>Information</td><td>3.32192809488736</td><td>(bans hartley hartleys Hart Harts dit dits)</td></tr>
 </table>
 
-### Units of information rate
+### Units of Information Rate
 
 <table style="table { table-layout: fixed; }">
 <col width="25%" /><col width="25%" /><col width="25%" /><col width="25%" />
@@ -439,7 +463,7 @@ operations on quantities with units. A quantity with unit information
 is created by procedure `val-with-units`:
 
 ```scheme
- (use unitconv with-units)
+ (import unitconv with-units)
  (val-with-units 10 m) ->  #(10 #(unit meter (m meters) [Length] 1.0))
 ```
 
@@ -460,7 +484,8 @@ The following operations are available for operations on quantities with units:
 
 ## Version history
 
-- 3.3 : Additional units of time [Andre Sa]
+- 4.0 : Using exact arithmetic [André Sá]
+- 3.3 : Additional units of time [André Sá]
 - 3.0 : Compatibility with CHICKEN 5
 - 2.6 : Bugfixes in unit* and unit/
 - 2.3 : Added definitions for centimeter and centimeter-squared
@@ -481,7 +506,7 @@ The following operations are available for operations on quantities with units:
 ## License
 
 >
-> Copyright 2007-2020 Ivan Raikov.
+> Copyright 2007-2020 Ivan Raikov, André Sá.
 > 
 > This program is free software: you can redistribute it and/or modify
 > it under the terms of the GNU General Public License as published by
