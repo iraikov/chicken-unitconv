@@ -17,7 +17,7 @@
 
  ; A list of eggs unitconv depends on.
 
- (needs datatype matchable numbers)
+ (needs matchable numbers)
 
  (author "Ivan Raikov")
 
