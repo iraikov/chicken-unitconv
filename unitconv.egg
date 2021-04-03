@@ -3,7 +3,6 @@
  (license "LGPL-3")
  (category math)
  (dependencies matchable)
- (test-dependencies test)
  (author "Ivan Raikov")
  (components
   (extension unitconv)
